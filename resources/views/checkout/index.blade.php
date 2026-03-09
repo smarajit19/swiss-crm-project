@@ -146,7 +146,7 @@
                 <input type="hidden" name="coupon_code" value="No Discount">
                 <input type="hidden" name="regprice" id="regprice" value="">
                 <input type="hidden" name="individualPrice" id="individualPrice" value="">
-                <input type="hidden" name="packageQuantity" id="packageQuantity" value="">
+                <input type="hidden" name="packageQuantity" id="packageQuantity" value="3">
 
                 <div class="formBox">
                     <div class="frm-flds fl form-floating">
@@ -379,19 +379,26 @@
                             <label for="city" class="fl-label">Your City</label>
                         </div>
                         <div class="frm-flds fl form-floating">
-                            <select name="billingCountry" type="text" placeholder="Your State"
+                            <select name="billingCountry"
                                 class="selcet-fld required cb-remove-class-billing frmField form-control no-error"
-                                data-selected="US" data-error-message="Please select your billing country!">
+                                data-selected="US"
+                                data-error-message="Please select your billing country!">
                                 <option value="">Select Country</option>
+                                <option value="US" selected>United States</option>
+                                <option value="CA">Canada</option>
+                                <option value="IND">India</option>
                             </select>
                             <label for="billingCountry" class="fl-label">Select Country</label>
                         </div>
+
                         <div class="frm-flds fl form-floating">
-                            <input type="text" name="billingState"
+                            <input type="text"
+                                name="billingState"
                                 class="selcet-fld required cb-remove-class-billing frmField form-control"
-                                placeholder="Your State" data-error-message="Please select your billing state!"
-                                data-selected="" />
-                            <label for="state" class="fl-label">Select State</label>
+                                placeholder="Your State"
+                                data-error-message="Please enter your billing state!"
+                                value="" />
+                            <label for="billingState" class="fl-label">Select State</label>
                         </div>
                         <div class="frm-flds fl form-floating">
                             <input type="tel" name="billingZip"
@@ -423,18 +430,26 @@
                             <label for="city" class="fl-label">Your City</label>
                         </div>
                         <div class="frm-flds fl form-floating">
-                            <select name="shippingCountry" type="text" placeholder="Your State"
-                                class="selcet-fld required cb-remove-class frmField form-select" data-selected="US"
+                            <select name="shippingCountry"
+                                class="selcet-fld required cb-remove-class frmField form-select"
+                                data-selected="US"
                                 data-error-message="Please select your country!">
                                 <option value="">Select Country</option>
+                                <option value="US" selected>United States</option>
+                                <option value="CA">Canada</option>
+                                <option value="IND">India</option>
                             </select>
                             <label for="shippingCountry" class="fl-label">Select Country</label>
                         </div>
+
                         <div class="frm-flds fl form-floating">
-                            <input type="text" name="shippingState" placeholder="Your State"
+                            <input type="text"
+                                name="shippingState"
                                 class="selcet-fld required cb-remove-class frmField form-control"
-                                data-error-message="Please select your state!" readonly data-selected="" />
-                            <label for="state" class="fl-label">Select State</label>
+                                placeholder="Your State"
+                                data-error-message="Please enter your state!"
+                                value="" />
+                            <label for="shippingState" class="fl-label">Select State</label>
                         </div>
                         <div class="frm-flds fl form-floating">
                             <input type="tel" name="shippingZip" id="zip"
@@ -483,7 +498,7 @@
                         </div>
                         <div class="col-3">
                             <label class="switch">
-                                <input type="checkbox" class="cb-check-status-3" checked>
+                                <input type="checkbox" class="cb-check-status-3" name="jpp" checked>
                                 <span class="slider round"></span>
                             </label>
                         </div>
@@ -518,15 +533,6 @@
                             </div>
                         </div>
                         <!--row-->
-
-                        <div class="item-detail-row cb-click-bump-order-sum-div-2 d-none" id="Kinetic_Pro_Coverage">
-                            <div class="item-name">
-                                <p><span class="cb-clickbump-product-2"></span></p>
-                            </div>
-                            <div class="item-price">
-                                <p id="Kinetic_Pro_Coverage_Price"><!--span class="cb-clickbump-price-2"--> <span>$6.95</p>
-                            </div>
-                        </div>
 
                         <div class="item-detail-row cb-click-bump-order-sum-div d-none" id="Kinetic_Pro_Coverage">
                             <div class="item-name">
@@ -571,138 +577,276 @@
         </div>
     </div>
     <p id="loading-indicator" style="display:none;">Processing...</p>
+    <div id="page-loader" style="display:none;">
+        <div class="loader-spinner"></div>
+    </div>
 
 </div>
 
 @endsection
 
+@push('scripts')
 
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
-$(document).ready(function () {
+    $(document).ready(function() {
 
-    /* ===============================
-       PACKAGE SELECTION
-    =============================== */
-    $('.cb-package-container').on('click', function () {
+        /* ===============================
+           PACKAGE SELECTION
+        =============================== */
+        $('.cb-package-container').on('click', function() {
 
-        $('.cb-package-container').removeClass('active');
-        $(this).addClass('active');
+            $('.cb-package-container').removeClass('active');
+            $(this).addClass('active');
 
-        let quantity = $(this).data('quantity');
-        let price = parseFloat($(this).data('price'));
-        let regPrice = parseFloat($(this).data('regprice'));
-        let name = $(this).data('name');
-        let shipping = parseFloat($(this).data('ship'));
+            let quantity = $(this).data('quantity');
+            let price = parseFloat($(this).data('price'));
+            let regPrice = parseFloat($(this).data('regprice'));
+            let name = $(this).data('name');
+            let shipping = parseFloat($(this).data('ship'));
 
-        let individualPrice = (price / quantity).toFixed(2);
-        let discount = (regPrice - price).toFixed(2);
+            let individualPrice = (price / quantity).toFixed(2);
+            let discount = (regPrice - price).toFixed(2);
 
-        console.log(quantity)
-        // Hidden fields
-        $('#regprice').val(regPrice);
-        $('#individualPrice').val(individualPrice);
-        $('#packageQuantity').val(quantity);
-        $('#dynamic-shipping-charge').val(shipping);
-        $('#custom-shipping-charge').val(shipping);
+            console.log(quantity)
+            // Hidden fields
+            $('#regprice').val(regPrice);
+            $('#individualPrice').val(individualPrice);
+            $('#packageQuantity').val(quantity);
+            $('#dynamic-shipping-charge').val(shipping);
+            $('#custom-shipping-charge').val(shipping);
 
-        // Order summary update
-        $('.cb-cart-title').text(name);
-        $('.cb-product-price').text(price.toFixed(2));
-        $('.cb-total-discount').text(discount);
-        $('.cb-gtotal-without-shipping').text((price + shipping).toFixed(2));
-    });
-
-
-    /* ===============================
-       BILLING TOGGLE
-    =============================== */
-    $('#togData').on('change', function () {
-        if ($(this).is(':checked')) {
-            $('.billing-info').hide();
-        } else {
-            $('.billing-info').show();
-        }
-    });
+            // Order summary update
+            $('.cb-cart-title').text(name);
+            $('.cb-product-price').text(price.toFixed(2));
+            $('.cb-total-discount').text(discount);
+            // $('.cb-gtotal-without-shipping').text((price + shipping).toFixed(2));
+        });
 
 
-    /* ===============================
-       FORM SUBMIT AJAX
-    =============================== */
-    $('#payment-form').on('submit', function (e) {
-        e.preventDefault();
-
-        // Combine country code + phone
-        let countryCode = $('#country-phone-code').val();
-        let phoneNumber = $('#formated-phone-number').val();
-        $('#phone').val(countryCode + phoneNumber);
-
-        // Disable button to prevent double submit
-        $('.cb-checkout-button').prop('disabled', true).text('Processing...');
-
-        $.ajax({
-            url: "{{ route('checkout-frm-submit') }}", // Laravel route
-            type: "POST",
-            data: $(this).serialize(),
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function (response) {
-
-                if (response.status === 'success') {
-                    window.location.href = response.redirect_url;
-                } else {
-                    alert(response.message);
-                    $('.cb-checkout-button').prop('disabled', false).text('Complete Checkout');
-                }
-            },
-            error: function (xhr) {
-                console.log(xhr)
-                $('.cb-checkout-button').prop('disabled', false).text('Complete Checkout');
-
-                if (xhr.status === 422) {
-                    let errors = xhr.responseJSON.errors;
-                    let errorMsg = "";
-
-                    $.each(errors, function (key, value) {
-                        errorMsg += value[0] + "\n";
-                    });
-
-                    alert(errorMsg);
-                } else {
-                    alert("Something went wrong. Please try again.");
-                }
+        /* ===============================
+           BILLING TOGGLE
+        =============================== */
+        $('#togData').on('change', function() {
+            if ($(this).is(':checked')) {
+                $('.billing-info').hide();
+            } else {
+                $('.billing-info').show();
             }
         });
 
-    });
 
-});
+        /* ===============================
+           FORM SUBMIT AJAX
+        =============================== */
+        $('#payment-form').on('submit', function(e) {
+            e.preventDefault();
+
+            // Combine country code + phone
+            let countryCode = $('#country-phone-code').val();
+            let phoneNumber = $('#formated-phone-number').val();
+            $('#phone').val(countryCode + phoneNumber);
+
+            // Disable button
+            $('.cb-checkout-button')
+                .prop('disabled', true)
+                .text('Processing...');
+
+            // Show loader immediately
+            $('#page-loader').fadeIn(200);
+
+            $.ajax({
+                url: "{{ route('checkout-frm-submit') }}",
+                type: "POST",
+                data: $(this).serialize(),
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+
+                success: function(response) {
+                console.log(response, 'response')
+                    if (response.status === true) {
+                        window.location.href = response.redirect_url;
+                    } else {
+                        $('#page-loader').hide();
+                        alert(response.message);
+
+                        $('.cb-checkout-button')
+                            .prop('disabled', false)
+                            .text('Complete Checkout');
+                    }
+                },
+
+                error: function(xhr) {
+                    console.log(xhr, 'error')
+                    $('#page-loader').hide();
+
+                    $('.cb-checkout-button')
+                        .prop('disabled', false)
+                        .text('Complete Checkout');
+
+                    if (xhr.status === 422) {
+
+                        let errors = xhr.responseJSON.errors;
+                        let errorMsg = "";
+
+                        $.each(errors, function(key, value) {
+                            errorMsg += value[0] + "\n";
+                        });
+
+                        alert(errorMsg);
+
+                    } else {
+                        alert("Something went wrong. Please try again.");
+                    }
+                }
+            });
+
+        });
+
+    });
 </script>
+
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
 
-    // Select all package blocks
-    const packages = document.querySelectorAll('.cb-package-container');
+        const packages = document.querySelectorAll('.cb-package-container');
 
-    packages.forEach(function(pkg){
+        const warrantyCheckbox = document.querySelector('.wrnt');
+        const journeyCheckbox = document.querySelector('.cb-check-status-3');
 
-        let price = parseFloat(pkg.dataset.price);
-        let quantity = parseInt(pkg.dataset.quantity);
+        const warrantyRow = document.getElementById('Kinetic_Pro_Coverage');
+        const journeyRow = document.getElementById('Kinetic_Pro_Fitness_Club');
 
-        if (!isNaN(price) && !isNaN(quantity) && quantity > 0) {
+        const warrantyPrice = 9.95;
+        const journeyPrice = 3.50;
 
-            let individualPrice = (price / quantity).toFixed(2);
+        /* ======================
+           /EA PRICE CALCULATION
+        ====================== */
+        packages.forEach(pkg => {
 
-            // Find the span inside this package only
-            let priceContainer = pkg.querySelector('.cb-buy-each');
+            let price = parseFloat(pkg.dataset.price);
+            let qty = parseInt(pkg.dataset.quantity);
 
-            if (priceContainer) {
-                priceContainer.textContent = '$' + individualPrice;
+            if (!isNaN(price) && !isNaN(qty) && qty > 0) {
+                let eachPrice = (price / qty).toFixed(2);
+                let eachBox = pkg.querySelector('.cb-buy-each');
+                if (eachBox) {
+                    eachBox.textContent = "$" + eachPrice;
+                }
             }
-        }
-    });
 
-});
+        });
+
+        /* ======================
+           UPDATE TOTALS FUNCTION
+        ====================== */
+        function updateTotals() {
+
+            const activePackage = document.querySelector('.cb-package-container.active');
+            if (!activePackage) return;
+
+            let packagePrice = parseFloat(activePackage.dataset.price) || 0;
+            let regPrice = parseFloat(activePackage.dataset.regprice) || packagePrice;
+
+            let warranty = 0;
+            let journey = 0;
+
+            /* WARRANTY */
+            if (warrantyCheckbox.checked) {
+                warranty = warrantyPrice;
+                warrantyRow.classList.remove("d-none");
+                document.querySelector("#Kinetic_Pro_Coverage_Price span")
+                    .textContent = "$" + warrantyPrice.toFixed(2);
+            } else {
+                warrantyRow.classList.add("d-none");
+            }
+
+            /* JOURNEY */
+            if (journeyCheckbox.checked) {
+                journey = journeyPrice;
+                journeyRow.classList.remove("d-none");
+            } else {
+                journeyRow.classList.add("d-none");
+            }
+
+            /* DISCOUNT */
+            let discount = regPrice - packagePrice;
+            console.log(activePackage, 'activePackage')
+            if (isNaN(discount) || discount < 0) {
+                discount = 0;
+            }
+
+            /* GRAND TOTAL */
+            let grandTotal = packagePrice + warranty + journey;
+
+            /* UPDATE UI */
+            document.querySelector('.cb-product-price').textContent = packagePrice.toFixed(2);
+            document.querySelector('.cb-total-discount').textContent = discount.toFixed(2);
+            document.querySelector('.cb-gtotal-without-shipping').textContent = '$' + grandTotal.toFixed(2);
+
+            // Update /ea price for active package
+            let qty = parseInt(activePackage.dataset.quantity) || 1;
+            let eachPrice = (packagePrice / qty).toFixed(2);
+            let eachBox = activePackage.querySelector('.cb-buy-each');
+            if (eachBox) {
+                eachBox.textContent = "$" + eachPrice;
+            }
+
+        }
+
+        /* ======================
+           PACKAGE CLICK
+        ====================== */
+        packages.forEach(pkg => {
+
+            pkg.addEventListener("click", function() {
+
+                packages.forEach(p => p.classList.remove("active"));
+                this.classList.add("active");
+
+                document.querySelector('.cb-cart-title').textContent = this.dataset.name;
+
+                updateTotals();
+
+            });
+
+        });
+
+        /* ======================
+           WARRANTY CHANGE
+        ====================== */
+        warrantyCheckbox.addEventListener("change", updateTotals);
+
+        /* ======================
+           JOURNEY CHANGE
+        ====================== */
+        journeyCheckbox.addEventListener("change", updateTotals);
+
+        /* ======================
+           DEFAULT STATES ON PAGE LOAD
+        ====================== */
+        journeyCheckbox.checked = true;
+
+        // Set default package to "Package 3" if it exists
+        let defaultPackage = Array.from(packages).find(pkg => pkg.dataset.name === "Package 3");
+
+        // Fallback to first package
+        if (!defaultPackage && packages.length > 0) {
+            defaultPackage = packages[0];
+        }
+
+        if (defaultPackage) {
+            packages.forEach(p => p.classList.remove("active"));
+            defaultPackage.classList.add("active");
+            document.querySelector('.cb-cart-title').textContent = defaultPackage.dataset.name;
+        }
+
+        // Calculate totals on page load
+        updateTotals();
+
+    });
 </script>
+
+@endpush

@@ -1,0 +1,295 @@
+.customWidth {
+
+
+
+
+
+    max-width: 450px;
+
+
+
+
+
+    display: -ms-flexbox!important;
+
+
+
+
+
+    display: flex!important;
+
+
+
+
+
+    -ms-flex-pack: justify!important;
+
+
+
+
+
+    justify-content: space-between!important;
+
+
+
+
+
+    -ms-flex-align: center!important;
+
+
+
+
+
+    align-items: center!important;
+
+
+
+
+
+    margin: auto;
+
+
+
+
+
+    padding: 5px 0;
+
+
+
+
+
+}
+
+
+
+
+
+.customWidth h5 {
+
+
+
+
+
+    font-size: 16px;
+
+
+
+
+
+    font-weight: 400;
+
+
+
+
+
+}
+
+
+
+
+
+.quantityList {
+
+
+
+
+
+    border: 1px solid #cecece;
+
+
+
+
+
+    border-radius: 7px;
+
+
+
+
+
+    padding: 3px;
+
+
+
+
+
+    display: flex!important;
+
+
+
+
+
+    -ms-flex-pack: center!important;
+
+
+
+
+
+    justify-content: center!important;
+
+
+
+
+
+    -ms-flex-align: center!important;
+
+
+
+
+
+    align-items: center!important;
+
+
+
+
+
+}
+
+
+
+
+
+.quantityList li {
+
+
+
+
+
+    position: relative;
+
+
+
+
+
+    overflow: hidden;
+
+
+
+
+
+    border-radius: 5px;
+
+
+
+
+
+}
+
+
+
+
+
+.quantityList li input {
+
+
+
+
+
+    display: none;
+
+
+
+
+
+}
+
+
+
+
+
+.quantityList li span {
+
+
+
+
+
+    display: block;
+
+
+
+
+
+    width: 45px;
+
+
+
+
+
+    background: #e5f1ee;
+
+
+
+
+
+    text-align: center;
+
+
+
+
+
+    margin: 0px 1px;
+
+
+
+
+
+    padding: 3px 0px;
+
+
+
+
+
+    border-radius: 2px;
+
+
+
+
+
+    font-weight: 700;
+
+
+
+
+
+    color: #74c6b4;
+
+
+
+
+
+    cursor: pointer;
+
+
+
+
+
+    font-size: 15px;
+
+
+
+
+
+}
+
+
+
+
+
+.quantityList input:checked + span {
+
+
+
+
+
+    background: #74c6b4;
+
+
+
+
+
+    color: #fff;
+
+
+
+
+
+}
