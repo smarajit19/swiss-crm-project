@@ -173,7 +173,7 @@
           </div>
         </div>
         <p class="clearall"></p>
-        <a href="#" class="no-thank">
+        <a href="/total-heat-pro/offer/1/upsell2" class="no-thank">
           No thanks, I don't want this great offer.
         </a>
       </div>
@@ -207,6 +207,16 @@
 </style>
 
 <script>
+const checkoutDebugKey = 'checkout_api_debug_log';
+try {
+    const checkoutDebugRaw = sessionStorage.getItem(checkoutDebugKey);
+    if (checkoutDebugRaw) {
+        console.log('Checkout API debug log from previous page:', JSON.parse(checkoutDebugRaw));
+    }
+} catch (e) {
+    console.warn('Unable to read checkout debug log', e);
+}
+
 function setUpsell1Loading(isLoading) {
     const $btn = $("#i6t8ex");
     const originalText = $btn.data("original-text") || $btn.text().trim();
@@ -245,7 +255,7 @@ $(document).on("click","#i6t8ex",function(e){
 
             if(response.status){
 
-                window.location.href="/total-heat-pro/upsell2";
+                window.location.href="/total-heat-pro/offer/1/upsell2";
 
             }else{
                 setUpsell1Loading(false);

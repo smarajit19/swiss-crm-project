@@ -34,6 +34,7 @@ class Upsell1aController extends Controller
             }
 
             $response = $this->crm->upsell($sessionToken,1);
+            $this->storeUpsellInSession();
 
             return response()->json([
                 'status'=>true,
@@ -47,5 +48,34 @@ class Upsell1aController extends Controller
                 'message'=>$e->getMessage()
             ]);
         }
+    }
+
+    private function storeUpsellInSession(): void
+    {
+        $thankYouData = session('thank_you_data', []);
+
+        if (empty($thankYouData)) {
+            return;
+        }
+
+        $items = $thankYouData['items'] ?? [];
+        $items = array_values(array_filter($items, fn ($item) => ($item['key'] ?? '') !== 'upsell1a'));
+
+        $items[] = [
+            'key' => 'upsell1a',
+            'name' => 'Vital Smart Glasses + VIP Offer',
+            'quantity' => 1,
+            'amount' => 59.99,
+        ];
+
+        $shipping = (float) ($thankYouData['shipping_amount'] ?? 0);
+        $subtotal = collect($items)->sum('amount');
+        $total = round($subtotal + $shipping, 2);
+
+        $thankYouData['items'] = $items;
+        $thankYouData['order_total'] = $total;
+        $thankYouData['statement_total'] = $total;
+
+        session(['thank_you_data' => $thankYouData]);
     }
 }

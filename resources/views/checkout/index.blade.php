@@ -589,6 +589,16 @@
 
 <script>
     $(document).ready(function() {
+        const checkoutDebugKey = 'checkout_api_debug_log';
+        const isCheckoutDebugMode = new URLSearchParams(window.location.search).has('debug_checkout');
+
+        function persistCheckoutDebugLog(payload) {
+            try {
+                sessionStorage.setItem(checkoutDebugKey, JSON.stringify(payload));
+            } catch (e) {
+                console.warn('Unable to persist checkout debug log', e);
+            }
+        }
 
         /* ===============================
            PACKAGE SELECTION
@@ -640,6 +650,7 @@
         =============================== */
         $('#payment-form').on('submit', function(e) {
             e.preventDefault();
+            const serializedFormData = $(this).serialize();
 
             // Combine country code + phone
             let countryCode = $('#country-phone-code').val();
@@ -664,7 +675,23 @@
 
                 success: function(response) {
                 console.log(response, 'response')
+                    persistCheckoutDebugLog({
+                        type: 'success',
+                        at: new Date().toISOString(),
+                        request: serializedFormData,
+                        response: response
+                    });
+
                     if (response.status === true) {
+                        $('#page-loader').hide();
+                        if (isCheckoutDebugMode) {
+                            $('.cb-checkout-button')
+                                .prop('disabled', false)
+                                .text('Complete Checkout');
+                            alert('Debug mode is ON. Redirect paused. Check console/sessionStorage.');
+                            console.log('Checkout success response:', response);
+                            return;
+                        }
                         window.location.href = response.redirect_url;
                     } else {
                         $('#page-loader').hide();
@@ -678,6 +705,15 @@
 
                 error: function(xhr) {
                     console.log(xhr, 'error')
+                    persistCheckoutDebugLog({
+                        type: 'error',
+                        at: new Date().toISOString(),
+                        request: serializedFormData,
+                        status: xhr.status,
+                        statusText: xhr.statusText,
+                        responseText: xhr.responseText
+                    });
+
                     $('#page-loader').hide();
 
                     $('.cb-checkout-button')

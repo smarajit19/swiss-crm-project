@@ -133,11 +133,113 @@ class CheckoutController extends Controller
                 ]
             ]);
 
+            $packageCatalog = [
+                1 => ['name' => '1x Total Heat Pro Single Pack', 'price' => 111.10],
+                2 => ['name' => '2x Total Heat Pros Studio Pack', 'price' => 199.98],
+                3 => ['name' => '3x Total Heat Pros Multi Pack', 'price' => 266.64],
+                4 => ['name' => '4x Total Heat Pros Deluxe Pack', 'price' => 311.09],
+            ];
+
+            $selectedPackage = $packageCatalog[$quantity] ?? $packageCatalog[1];
+
+            $items = [
+                [
+                    'key' => 'main_package',
+                    'name' => $selectedPackage['name'],
+                    'quantity' => 1,
+                    'amount' => (float) $selectedPackage['price'],
+                ]
+            ];
+
+            if ($request->packopt === 'on') {
+                $items[] = [
+                    'key' => 'packopt',
+                    'name' => 'Total Heat Pro Coverage',
+                    'quantity' => 1,
+                    'amount' => 9.95,
+                ];
+            }
+
+            if ($request->jpp === 'on') {
+                $items[] = [
+                    'key' => 'jpp',
+                    'name' => 'Journey Package Protection',
+                    'quantity' => 1,
+                    'amount' => 3.50,
+                ];
+            }
+
+            $checkoutAttributes = data_get($checkoutResponse, 'data.attributes', []);
+            $displayShipTotal = (string) ($checkoutAttributes['display_ship_total'] ?? '');
+            $displayOrderTotal = (string) ($checkoutAttributes['display_total'] ?? '');
+            $displayPaymentTotal = (string) ($checkoutAttributes['display_payment_total'] ?? '');
+
+            $currencySymbol = '€';
+            foreach ([$displayOrderTotal, $displayShipTotal, $displayPaymentTotal] as $displayValue) {
+                if (!empty($displayValue) && preg_match('/[^0-9.,\s\-]/u', $displayValue, $matches)) {
+                    $currencySymbol = $matches[0];
+                    break;
+                }
+            }
+
+            $shippingAmount = (float) ($request->dynamic_shipping_charge ?? 0);
+            if (!empty($displayShipTotal)) {
+                $parsedShipTotal = preg_replace('/[^0-9.\-]/', '', $displayShipTotal);
+                if ($parsedShipTotal !== '' && is_numeric($parsedShipTotal)) {
+                    $shippingAmount = (float) $parsedShipTotal;
+                }
+            }
+
+            $subTotal = collect($items)->sum('amount');
+            $grandTotal = round($subTotal + $shippingAmount, 2);
+
+            $billingAddress = [
+                'name' => trim(($request->firstName ?? '') . ' ' . ($request->lastName ?? '')),
+                'address1' => $request->billingAddress1 ?: $request->shippingAddress1,
+                'address2' => $request->billingAddress2 ?: $request->shippingAddress2,
+                'city' => $request->billingCity ?: $request->shippingCity,
+                'state' => $request->billingState ?: $request->shippingState,
+                'country' => $request->billingCountry ?: $request->shippingCountry,
+                'zip' => $request->billingZip ?: $request->shippingZip,
+            ];
+
+            $shippingAddressData = [
+                'name' => trim(($request->firstName ?? '') . ' ' . ($request->lastName ?? '')),
+                'address1' => $request->shippingAddress1,
+                'address2' => $request->shippingAddress2,
+                'city' => $request->shippingCity,
+                'state' => $request->shippingState,
+                'country' => $request->shippingCountry,
+                'zip' => $request->shippingZip,
+            ];
+
+            session([
+                'thank_you_data' => [
+                    'order_number' => data_get($checkoutResponse, 'data.attributes.number')
+                        ?? data_get($checkoutResponse, 'data.attributes.order_id')
+                        ?? data_get($checkoutResponse, 'data.id')
+                        ?? '',
+                    'order_date' => now()->format('m-d-Y'),
+                    'email' => $request->email,
+                    'currency_symbol' => $currencySymbol,
+                    'items' => $items,
+                    'shipping_amount' => round($shippingAmount, 2),
+                    'shipping_display' => $displayShipTotal,
+                    'order_total' => $grandTotal,
+                    'order_total_display' => $displayOrderTotal,
+                    'statement_total' => $grandTotal,
+                    'statement_total_display' => $displayPaymentTotal,
+                    'statement_descriptor' => 'TACTICAL SUPPLY 8668090004',
+                    'shipping_address' => $shippingAddressData,
+                    'billing_address' => $billingAddress,
+                ]
+            ]);
+
             return response()->json([
                 'status' => true,
                 'lead' => $leadResponse,
                 'checkout' => $checkoutResponse,
-                'redirect_url' => url('/total-heat-pro/upsell1a')
+                'redirect_url' => url('/total-heat-pro/offer/1/upsell1a')
             ]);
         } catch (\Exception $e) {
             return response()->json([
