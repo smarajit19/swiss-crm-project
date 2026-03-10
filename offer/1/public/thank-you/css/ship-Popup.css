@@ -1,0 +1,349 @@
+html {
+    scroll-behavior: smooth;
+}
+body {
+    background: #e5e5e5;
+    position: relative;
+}
+.customfooter {
+    float: inherit;
+}
+.overlay {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 10;
+    background: -moz-radial-gradient(center, ellipse cover, rgba(0, 0, 0, 0.4) 0, rgba(0, 0, 0, 0.9) 100%);
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(0, 0, 0, 0.4)), color-stop(100%, rgba(0, 0, 0, 0.9)));
+    background: -webkit-radial-gradient(center, ellipse cover, rgba(0, 0, 0, 0.4) 0, rgba(0, 0, 0, 0.9) 100%);
+    background: -o-radial-gradient(center, ellipse cover, rgba(0, 0, 0, 0.4) 0, rgba(0, 0, 0, 0.9) 100%);
+    background: -ms-radial-gradient(center, ellipse cover, rgba(0, 0, 0, 0.4) 0, rgba(0, 0, 0, 0.9) 100%);
+    background: radial-gradient(center, ellipse cover, rgba(0, 0, 0, 0.4) 0, rgba(0, 0, 0, 0.9) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#66000000', endColorstr='#e6000000', GradientType=1);
+    -ms-filter: "alpha(opacity=50)";
+    filter: alpha(opacity=50);
+    animation: fadeIn 1s;
+    -webkit-animation: fadeIn 1s;
+    -moz-animation: fadeIn 1s;
+    -o-animation: fadeIn 1s;
+    -ms-animation: fadeIn 1s;
+}
+.form-shipping-prt {
+    border-radius: 4px;
+    box-shadow: 0 2px 15px rgb(0 0 0 / 40%);
+    z-index: 9999;
+    position: relative;
+    animation: fadeIn 1.5s;
+    -webkit-animation: fadeIn 1.5s;
+    -moz-animation: fadeIn 1.5s;
+    -o-animation: fadeIn 1.5s;
+    -ms-animation: fadeIn 1.5s;
+}
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+@-moz-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+@-webkit-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+@-o-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+@-ms-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+.form-shpping {
+    display: none;
+    background: #f2f2f2;
+    padding: 15px;
+    border-radius: 5px;
+}
+.btn_confirm {
+    color: #fff;
+    border-radius: 3px;
+    box-shadow: inset 0 1px 0 0 #27f722;
+    background-color: #1ce105;
+    background-image: linear-gradient(#05e117, #0a8c05) !important;
+    border: 1px solid #0b9c00;
+    text-shadow: 0 1px 0 #536f56;
+    padding: 7px 18px;
+    margin: 0 auto;
+    display: block;
+    margin-top: 20px;
+    font-size: 13px;
+}
+.cancel-btn {
+    color: #bb1513;
+    border: 1px solid #800806;
+    border-radius: 3px;
+    margin: 0 auto;
+    margin-top: 20px;
+    width: auto;
+    background: #fff;
+    cursor: pointer;
+    padding: 7px 18px;
+    margin-right: 10px;
+}
+.cancel-btn:hover {
+    background: linear-gradient(#bb1513, #8f0907) !important;
+    color: #fff;
+}
+
+
+.shipingAdd {
+    background: #f2f2f2;
+    padding: 15px;
+    border-radius: 5px;
+}
+.shipingAdd h3 {
+    color: #999999;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+.shipingAdd p {
+    color: #666666;
+    font-size: 16px;
+    font-weight: 400;
+}
+.thank_prtt{
+    flex-wrap: nowrap;
+}
+.thank_clr{
+      background: #f2f2f2;
+      border-radius: 5px;  
+      width: 100%;
+}
+.thank_clr:last-child{
+    margin-left: 10px;
+}
+.billAdd {
+    background: #f2f2f2;
+    padding: 15px;
+    border-radius: 5px;
+    /* min-height: 100%; */
+}
+.billAdd h3 {
+    color: #999999;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+.billAdd p {
+    color: #666666;
+    font-size: 16px;
+    font-weight: 400;
+}
+form {
+    padding: 0;
+}
+select.form-control {
+    padding-left: 4.3px !important;
+    -webkit-appearance: none;
+    appearance: none;
+    background: url(../../images/dwn-arw-n.png) no-repeat 98.5% center / 15px , #fff;
+}
+.form-control {
+    font-family: Roboto, Helvetica Neue, Arial, Helvetica, sans-serif;
+    outline: none;
+    tap-highlight-color: hsla(0, 0%, 100%, 0);
+    line-height: 1.2142em;
+    padding: 0.67861429em 0.8em;
+    font-size: 0.8em;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    background-image: none;
+    border-radius: 0.3em;
+    border: 1px solid #ccc;
+    border-top-color: #c2c2c2;
+    border-bottom-color: #d6d6d6;
+    box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
+    color: #333;
+    display: block;
+    line-height: 1.2;
+    height: 2.5em;
+    padding: 0 0.75em;
+    width: 100%;
+    background-color: #fff;
+}
+input[type="text"],
+input[type="tel"],
+input[tel="email"] {
+    font-family: Roboto, Helvetica Neue, Arial, Helvetica, sans-serif;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    tap-highlight-color: hsla(0, 0%, 100%, 0);
+    line-height: 1.2142em;
+    padding: 0.67861429em 0.8em;
+    font-size: 0.8em;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    background-image: none;
+    border-radius: 0.3em;
+    border: 1px solid #ccc;
+    border-top-color: #c2c2c2;
+    border-bottom-color: #d6d6d6;
+    box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
+    color: #333;
+    display: block;
+    line-height: 1.2;
+    height: 2.5em;
+    padding: 0 0.75em;
+    width: 100%;
+    background-color: #fff;
+}
+.form-shpping h3 {
+    color: #999999;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+.edit-btn-shw,
+.confirm-btn-shw {
+    color: #fff;
+    border-radius: 3px;
+    padding: 6px 4px;
+    font-size: 10px;
+    display: block;
+    box-shadow: inset 0 1px 0 0 #22c1f7;
+    cursor: pointer;
+    background-color: #05aae1;
+    background-image: linear-gradient(#05aae1, #008ab8);
+    border: 1px solid #008ab8;
+    text-shadow: 0 1px 0 #53686f;
+    position: relative;
+    transition: -webkit-transform 0.1s;
+    transition: transform 0.1s;
+}
+.confirm-btn-shw {
+    margin-left: 10px;
+}
+.confirm-btn-shw {
+    box-shadow: inset 0 1px 0 0 #27f722;
+    background-color: #1ce105;
+    background-image: linear-gradient(#05e117, #0a8c05);
+    border: 1px solid #0b9c00;
+    text-shadow: 0 1px 0 #536f56;
+}
+.edit-btn-shw:hover {
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+    background-color: inherit;
+    box-shadow: inset 0 1px 0 0 #22c1f7;
+    cursor: pointer;
+    background-color: #05aae1;
+    background-image: linear-gradient(#05aae1, #008ab8);
+    border: 1px solid #008ab8;
+    text-shadow: 0 1px 0 #53686f;
+}
+.confirm-btn-shw:hover {
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+    background-color: inherit;
+    box-shadow: inset 0 1px 0 0 #27f722;
+    background-color: #1ce105;
+    background-image: linear-gradient(#05e117, #0a8c05);
+    border: 1px solid #0b9c00;
+    text-shadow: 0 1px 0 #536f56;
+}
+button {
+    width: 100%;
+    cursor: pointer;
+}
+@media (max-width: 1199px) and (min-width: 992px)
+{
+.blue-sec-text h2 {
+    font-size: 18px!important;
+}
+.black-bg h3 {
+    font-size: 18px!important;
+}
+.blue-sec .container .row > .col-lg-7 {
+    -ms-flex: 0 0 70%;
+    flex: 0 0 70%;
+    max-width: 70%;
+}
+}
+@media (max-width: 992px) and (min-width: 768px) {  
+    .shipingAdd h3,
+    .shipingAdd p {
+        font-size: 13px;
+    }
+    .billAdd h3,
+    .billAdd p {
+        font-size: 13px;
+    }
+}
+@media (max-width: 767.98px) {
+.shipingAdd h3,
+.shipingAdd p {
+    font-size: 13px;
+}
+.billAdd h3,
+.billAdd p {
+    font-size: 13px;
+}
+
+.shipingAdd {
+    margin-bottom: 15px;
+}
+.billAdd {
+    margin-bottom: 15px;
+}
+.thank_prtt{
+    flex-wrap: wrap;
+}
+.thank_clr{
+      background: #f2f2f2;
+      border-radius: 5px;  
+      width: 100%;
+}
+.thank_clr:last-child{
+    margin-top: 10px;
+    margin-left: 0px;
+}
+}
+@media (max-width: 460px){
+.blue-sec-text p {
+    text-align: center;
+    line-height: 17px;
+}
+}
+input.has-error, select.has-error {
+    background: url(../../images/error-input.png) 99.5% 50% no-repeat #fff;
+    border: 1px solid orange;
+}
