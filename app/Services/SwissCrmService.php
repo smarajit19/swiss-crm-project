@@ -30,6 +30,7 @@ class SwissCrmService
 
     protected $upsell1 = [
         1 => 63,
+        2 => 73,
     ];
 
     protected $upsell2 = [

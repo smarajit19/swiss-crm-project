@@ -215,7 +215,7 @@
                         <option value="paypal">Paypal</option>
                     </select>
                     <div class="payoptbox">
-                        <div class="payment-cards-box paypal-box">
+                        <!-- <div class="payment-cards-box paypal-box">
                             <label class="paymybtn PaypalOpt">
                                 <input type="radio" name="cctype" value="paypal" class="ccard cb-paypemt-radio"
                                     data-paymentmethod="paypal">
@@ -241,7 +241,7 @@
                                     </path>
                                 </svg>
                             </label>
-                        </div>
+                        </div> -->
                         <div class="payment-cards-box cardPayOpt">
                             <label class="paymybtn">
                                 <input type="radio" class="ccard cb-paypemt-radio" name="cctype" value="cc" checked=""
