@@ -130,7 +130,7 @@
                     <div class="save-strip up2save-strip">
                         <p>
                             <small
-                                style="font-weight: bold; color: #ff0f0f; font-size: 16px">Only 5 Nano Car Cloths left!</small><br />
+                                style="font-weight: bold; color: #ff0f0f; font-size: 16px">Only <?php echo rand(6,9); ?> Nano Car Cloths left!</small><br />
                             <b><span id="stopwatch">04:41</span> MINUTES</b>
                         </p>
                     </div>
@@ -423,6 +423,44 @@
         arrows: false,
     });
 </script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    let display = document.getElementById("stopwatch");
+
+    if (!display) return;
+
+    let timeParts = display.innerText.split(":");
+    let minutes = parseInt(timeParts[0]);
+    let seconds = parseInt(timeParts[1]);
+
+    let totalSeconds = (minutes * 60) + seconds;
+
+    function updateTimer() {
+
+        if (totalSeconds <= 0) {
+            display.innerText = "00:00";
+            clearInterval(timerInterval);
+            return;
+        }
+
+        totalSeconds--;
+
+        let m = Math.floor(totalSeconds / 60);
+        let s = totalSeconds % 60;
+
+        m = m < 10 ? "0" + m : m;
+        s = s < 10 ? "0" + s : s;
+
+        display.innerText = m + ":" + s;
+    }
+
+    let timerInterval = setInterval(updateTimer, 1000);
+
+});
+</script>
+
 </body>
 
 </html>

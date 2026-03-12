@@ -121,7 +121,7 @@
                     <div class="save-strip save-strip-new up2save-strip">
                         <p>
                             <small
-                                style="font-weight: bold; color: #ff0f0f; font-size: 16px">Only 6 Extra Bonus Vital Smart Glasses left!</small><br />
+                                style="font-weight: bold; color: #ff0f0f; font-size: 16px">Only <?php echo rand(6,9); ?> Extra Bonus Vital Smart Glasses left!</small><br />
                             <b><span id="stopwatch">04:41</span> MINUTES</b>
                         </p>
                     </div>
@@ -265,4 +265,38 @@
         });
 
     });
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    let display = document.getElementById("stopwatch");
+    let time = display.innerText.split(":");
+
+    let minutes = parseInt(time[0]);
+    let seconds = parseInt(time[1]);
+
+    let totalSeconds = (minutes * 60) + seconds;
+
+    function updateTimer() {
+        if (totalSeconds <= 0) {
+            display.innerText = "00:00";
+            clearInterval(timerInterval);
+            return;
+        }
+
+        totalSeconds--;
+
+        let m = Math.floor(totalSeconds / 60);
+        let s = totalSeconds % 60;
+
+        m = m < 10 ? "0" + m : m;
+        s = s < 10 ? "0" + s : s;
+
+        display.innerText = m + ":" + s;
+    }
+
+    let timerInterval = setInterval(updateTimer, 1000);
+
+});
 </script>
