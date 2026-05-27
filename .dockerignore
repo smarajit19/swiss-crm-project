@@ -1,0 +1,16 @@
+.git
+.sixth
+offer/1/.sixth
+offer/1/node_modules
+offer/1/vendor
+offer/1/.env
+offer/1/.env.*
+offer/1/database/database.sqlite
+offer/1/storage/framework/cache/data/*
+offer/1/storage/framework/sessions/*
+offer/1/storage/framework/views/*
+offer/1/storage/logs/*
+offer/1/public/hot
+offer/1/public/storage
+offer/1/npm-debug.log
+offer/1/yarn-error.log
