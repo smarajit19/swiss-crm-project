@@ -600,6 +600,17 @@
             }
         }
 
+        $('#expirationDate').on('input', function() {
+            const digits = this.value.replace(/\D/g, '').slice(0, 4);
+
+            if (digits.length > 2) {
+                this.value = digits.slice(0, 2) + '/' + digits.slice(2);
+                return;
+            }
+
+            this.value = digits;
+        });
+
         /* ===============================
            PACKAGE SELECTION
         =============================== */
@@ -650,12 +661,18 @@
         =============================== */
         $('#payment-form').on('submit', function(e) {
             e.preventDefault();
-            const serializedFormData = $(this).serialize();
+
+            const expirationDigits = $('#expirationDate').val().replace(/\D/g, '').slice(0, 4);
+            if (expirationDigits.length === 4) {
+                $('#expirationDate').val(expirationDigits.slice(0, 2) + '/' + expirationDigits.slice(2));
+            }
 
             // Combine country code + phone
             let countryCode = $('#country-phone-code').val();
             let phoneNumber = $('#formated-phone-number').val();
             $('#phone').val(countryCode + phoneNumber);
+
+            const serializedFormData = $(this).serialize();
 
             // Disable button
             $('.cb-checkout-button')
@@ -668,7 +685,7 @@
             $.ajax({
                 url: "{{ route('checkout-frm-submit') }}",
                 type: "POST",
-                data: $(this).serialize(),
+                data: serializedFormData,
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },

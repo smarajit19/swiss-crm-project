@@ -88,9 +88,19 @@ class CheckoutController extends Controller
             }
             // dd($campaignProductIds);
 
-            $exp = str_replace(' ', '', $request->expirationDate); // remove spaces
-            [$month, $year] = explode('/', $exp);
-            $year = '20' . $year; // convert YY → YYYY
+            $digitsOnly = preg_replace('/\D+/', '', $request->expirationDate);
+
+            if (strlen($digitsOnly) < 4) {
+                throw new Exception('Please enter a valid expiration date.');
+            }
+
+            $month = substr($digitsOnly, 0, 2);
+            $year = substr($digitsOnly, -2);
+            $year = '20' . $year; // convert YY to YYYY
+
+            if ((int) $month < 1 || (int) $month > 12) {
+                throw new Exception('Please enter a valid expiration month.');
+            }
 
             $card = [
                 'month' => $month,
@@ -132,6 +142,10 @@ class CheckoutController extends Controller
                     "campaign_product_ids" => $campaignProductIds
                 ]
             ]);
+
+            if (isset($checkoutResponse['error']) || !empty($checkoutResponse['errors'])) {
+                throw new Exception($checkoutResponse['error'] ?? 'Checkout failed. Please check your payment details.');
+            }
 
             $packageCatalog = [
                 1 => ['name' => '1x Total Heat Pro Single Pack', 'price' => 111.10],
