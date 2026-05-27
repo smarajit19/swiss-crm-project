@@ -156,7 +156,7 @@
             </div>
         </div>
         <p class="clearall"></p>
-        <a href="{{ route('upsell2') }}" class="no-thank">
+        <a href="upsell2" class="no-thank">
             No thanks, I don't want this great offer.
         </a>
     </div>
@@ -235,7 +235,7 @@
 
         $.ajax({
 
-            url: "{{ route('upsell1a.store') }}",
+            url: "upsell1a/store",
             method: "POST",
             data: {
                 _token: "{{ csrf_token() }}",
@@ -247,7 +247,7 @@
 
                 if (response.status) {
 
-                    window.location.href = "{{ route('upsell2') }}";
+                    window.location.href = "upsell2";
 
                 } else {
                     setUpsell1Loading(false);

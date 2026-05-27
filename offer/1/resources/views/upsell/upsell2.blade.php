@@ -301,7 +301,7 @@
             </div>
         </div>
         <p class="clearall"></p>
-        <a href="{{ route('thank-you') }}" class="no-thank">
+        <a href="thank-you" class="no-thank">
             No thanks, I don’t need an awesome deal
         </a>
     </div>
@@ -374,7 +374,7 @@
         const quantity = $("input[name='quantity']:checked").val() || 1;
 
         $.ajax({
-            url: "{{ route('upsell2.store') }}",
+            url: "upsell2/store",
             method: "POST",
             data: {
                 _token: "{{ csrf_token() }}",

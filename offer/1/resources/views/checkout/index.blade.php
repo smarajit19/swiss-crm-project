@@ -683,7 +683,7 @@
             $('#page-loader').fadeIn(200);
 
             $.ajax({
-                url: "{{ route('checkout-frm-submit') }}",
+                url: "checkout-frm-submit",
                 type: "POST",
                 data: serializedFormData,
                 headers: {
