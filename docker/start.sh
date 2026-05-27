@@ -11,4 +11,4 @@ fi
 php artisan config:cache
 php artisan storage:link || true
 
-php -S 0.0.0.0:"${PORT:-10000}" -t public public/index.php
+php -S 0.0.0.0:"${PORT:-10000}" -t public docker/router.php
