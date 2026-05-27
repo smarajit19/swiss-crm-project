@@ -11,4 +11,4 @@ fi
 php artisan config:cache
 php artisan storage:link || true
 
-php artisan serve --host=0.0.0.0 --port="${PORT:-10000}"
+php -S 0.0.0.0:"${PORT:-10000}" -t public public/index.php
