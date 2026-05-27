@@ -239,7 +239,7 @@ class CheckoutController extends Controller
                 'status' => true,
                 'lead' => $leadResponse,
                 'checkout' => $checkoutResponse,
-                'redirect_url' => url('/total-heat-pro/offer/1/upsell1a')
+                'redirect_url' => url('/upsell1a')
             ]);
         } catch (\Exception $e) {
             return response()->json([

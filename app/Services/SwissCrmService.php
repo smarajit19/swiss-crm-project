@@ -9,37 +9,18 @@ class SwissCrmService
     protected $apiUrl = 'https://codeclouds-api.swisscrm.com/api/v1/storefront';
     protected $authToken = 'Z8lH1E-V68DKlsAIXiOY_fChNc2_gFD8K1j5DNQkdi4=';
 
-    protected $campaignMap = [
-        59 => 42, // offer_id => campaign_id
-        60 => 42,
-        61 => 42,
-        62 => 42,
-        65 => 42,
-        66 => 42,
-    ];
+    protected $campaignMap;
+    protected $productMap;
+    protected $upsell1;
+    protected $upsell2;
 
-    protected $productMap = [
-        1 => 59,
-        2 => 60,
-        3 => 61,
-        4 => 62,
-        'jpp' => 66,
-        'packopt' => 65,
-
-    ];
-
-    protected $upsell1 = [
-        1 => 63,
-        2 => 73,
-    ];
-
-    protected $upsell2 = [
-        1 => 67,
-        2 => 69,
-        3 => 70,
-        4 => 71,
-        5 => 72,
-    ];
+    public function __construct()
+    {
+        $this->campaignMap = config('swisscrm.campaignMap');
+        $this->productMap  = config('swisscrm.productMap');
+        $this->upsell1     = config('swisscrm.upsell1');
+        $this->upsell2     = config('swisscrm.upsell2');
+    }
 
     /**
      * Get campaign ID for a product
@@ -89,7 +70,6 @@ class SwissCrmService
 
             session(['session_token' => $sessionToken]);
             return $sessionToken;
-
         } catch (Exception $e) {
             throw new Exception("Click API error: " . $e->getMessage());
         }
@@ -173,16 +153,17 @@ class SwissCrmService
     }
 
     // Upsell order
-    public function upsell(string $sessionToken, int $step = 1)
+    public function upsell(string $sessionToken)
     {
         try {
 
-            $productId = $this->upsell1[$step] ?? $this->upsell1[1];
+            // Get both product IDs from mapping
+            $productIds = array_values($this->upsell1);
 
             $payload = [
                 "session_token" => $sessionToken,
                 "order" => [
-                    "campaign_product_ids" => [$productId]
+                    "campaign_product_ids" => $productIds
                 ]
             ];
 

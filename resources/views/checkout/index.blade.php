@@ -385,8 +385,8 @@
                                 data-error-message="Please select your billing country!">
                                 <option value="">Select Country</option>
                                 <option value="US" selected>United States</option>
-                                <option value="CA">Canada</option>
-                                <option value="IND">India</option>
+                                <!-- <option value="CA">Canada</option>
+                                <option value="IND">India</option> -->
                             </select>
                             <label for="billingCountry" class="fl-label">Select Country</label>
                         </div>
@@ -436,8 +436,8 @@
                                 data-error-message="Please select your country!">
                                 <option value="">Select Country</option>
                                 <option value="US" selected>United States</option>
-                                <option value="CA">Canada</option>
-                                <option value="IND">India</option>
+                                <!-- <option value="CA">Canada</option>
+                                <option value="IND">India</option> -->
                             </select>
                             <label for="shippingCountry" class="fl-label">Select Country</label>
                         </div>

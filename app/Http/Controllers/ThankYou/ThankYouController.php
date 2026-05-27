@@ -14,6 +14,7 @@ class ThankYouController extends Controller
         $shippingAmount = (float) ($thankYouData['shipping_amount'] ?? 0);
         $subTotal = collect($items)->sum('amount');
         $total = (float) ($thankYouData['order_total'] ?? round($subTotal + $shippingAmount, 2));
+        // dd($thankYouData);
 
         return view('thank-you.index', [
             'orderNumber' => $thankYouData['order_number'] ?? '',

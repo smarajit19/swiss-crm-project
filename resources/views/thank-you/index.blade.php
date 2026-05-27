@@ -61,7 +61,7 @@
                         </div>
                         <div class="order-det-sec">
                             <p>Order Total</p>
-                            <p>{{ $orderTotalDisplay ?: ($currencySymbol . number_format($orderTotal, 2)) }}</p>
+                            <p>{{ $currencySymbol.$orderTotal ?: ($currencySymbol . number_format($orderTotalDisplay, 2)) }}</p>
                         </div>
                     </div>
 
@@ -153,7 +153,7 @@
                         <hr class="gry">
                         <div class="order-det-sec totalSec">
                             <p class="tot">Total</p>
-                            <p>{{ $orderTotalDisplay ?: ($currencySymbol . number_format($orderTotal, 2)) }}</p>
+                            <p>{{ $currencySymbol.$orderTotal ?: ($currencySymbol . number_format($orderTotalDisplay, 2)) }}</p>
                         </div>
                         <br>
                         <h3>Charges on your statement will be processed for {{ $statementTotalDisplay ?: ($currencySymbol . number_format($statementTotal, 2)) }} and will appear as {{ $statementDescriptor }}.</h3>

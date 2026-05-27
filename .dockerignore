@@ -1,0 +1,16 @@
+.git
+.sixth
+offer
+node_modules
+vendor
+.env
+.env.*
+database/database.sqlite
+storage/framework/cache/data/*
+storage/framework/sessions/*
+storage/framework/views/*
+storage/logs/*
+public/hot
+public/storage
+npm-debug.log
+yarn-error.log
