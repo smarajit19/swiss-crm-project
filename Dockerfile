@@ -2,7 +2,7 @@ FROM composer:2 AS vendor
 
 WORKDIR /app
 
-COPY offer/1/composer.json offer/1/composer.lock ./
+COPY total-heat-pro/offer/1/composer.json total-heat-pro/offer/1/composer.lock ./
 RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader --no-scripts
 
 
@@ -10,9 +10,9 @@ FROM node:22-bookworm-slim AS assets
 
 WORKDIR /app
 
-COPY offer/1/package*.json offer/1/vite.config.js ./
-COPY offer/1/resources ./resources
-COPY offer/1/public ./public
+COPY total-heat-pro/offer/1/package*.json total-heat-pro/offer/1/vite.config.js ./
+COPY total-heat-pro/offer/1/resources ./resources
+COPY total-heat-pro/offer/1/public ./public
 RUN npm ci || npm install
 RUN npm run build
 
@@ -35,7 +35,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
-COPY offer/1 .
+COPY total-heat-pro/offer/1 .
 COPY --from=vendor /app/vendor ./vendor
 COPY --from=assets /app/public/build ./public/build
 
