@@ -3,8 +3,8 @@ services:
     name: swiss-crm-project
     runtime: docker
     plan: free
-    dockerfilePath: ./Dockerfile
-    dockerContext: .
+    dockerfilePath: ./offer/1/Dockerfile
+    dockerContext: ./offer/1
     envVars:
       - key: APP_ENV
         value: production

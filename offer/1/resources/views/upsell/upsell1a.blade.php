@@ -156,7 +156,7 @@
             </div>
         </div>
         <p class="clearall"></p>
-        <a href="/upsell2" class="no-thank">
+        <a href="{{ route('upsell2') }}" class="no-thank">
             No thanks, I don't want this great offer.
         </a>
     </div>
@@ -247,7 +247,7 @@
 
                 if (response.status) {
 
-                    window.location.href = "upsell2";
+                    window.location.href = "{{ route('upsell2') }}";
 
                 } else {
                     setUpsell1Loading(false);
